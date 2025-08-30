@@ -1,9 +1,8 @@
-package com.example.ssg_tab.global.exception.handler;
+package com.example.ssg_tab.global.exception;
 
 import com.example.ssg_tab.global.apiPayload.ApiResponse;
 import com.example.ssg_tab.global.apiPayload.dto.ErrorReasonDTO;
 import com.example.ssg_tab.global.apiPayload.status.ErrorStatus;
-import com.example.ssg_tab.global.exception.GeneralException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolation;
 import lombok.extern.slf4j.Slf4j;
