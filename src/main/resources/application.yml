@@ -5,6 +5,18 @@ spring:
   profiles:
     # 실행 시 활성화할 프로파일은 외부에서 지정 (--spring.profiles.active=local 등)
     active: local
+  jpa:
+    hibernate:
+      ddl-auto: update  # 선택: create, update, validate 등
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/ssg
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
 # Swagger(OpenAPI) 공통 설정
 springdoc:
