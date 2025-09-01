@@ -8,7 +8,7 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-    # 테스트용 DB 컨테이너 설정
+    # 테스트용 DB 및 Redis 컨테이너 설정
     services:
       mysql:
         image: mysql:8
@@ -19,6 +19,15 @@ jobs:
           - 3306:3306
         options: >-
           --health-cmd "mysqladmin ping -h localhost"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 3
+      redis:
+        image: redis:latest
+        ports:
+          - 6380:6379 # Changed from 6379:6379 to 6380:6379 (host:container)
+        options: >-
+          --health-cmd "redis-cli ping"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 3
@@ -40,7 +49,11 @@ jobs:
         # CI 단계에서는 테스트를 포함하여 빌드를 실행
         run: ./gradlew build
         env:
-          DB_HOST: 127.0.0.1:3306
+          DB_HOST: mysql
           DB_NAME: ssg
           DB_USER: root
           DB_PASSWORD: ssg
+          # Redis 연결 정보
+          spring.data.redis.host: redis
+          spring.data.redis.port: 6380 # Changed from 6379 to 6380
+          spring.data.redis.password: "" # Assuming no password for CI Redis
