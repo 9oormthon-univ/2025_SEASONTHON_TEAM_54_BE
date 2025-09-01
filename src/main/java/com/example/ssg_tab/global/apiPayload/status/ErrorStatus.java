@@ -27,6 +27,9 @@ public enum ErrorStatus implements BaseErrorCode {
     _NOT_FOUND(HttpStatus.NOT_FOUND, "COMMON404", "요청한 자원을 찾을 수 없습니다."),
     _CONFLICT(HttpStatus.CONFLICT, "COMMON409", "요청이 서버 상태와 충돌합니다."),
 
+    // 토큰 관련 에러
+    INVALID_TOKEN(HttpStatus.UNAUTHORIZED, "AUTH4001", "토큰이 유효하지 않습니다."),
+
     // 멤버 관련 에러
     MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "MEMBER4001", "사용자가 없습니다.");
 
