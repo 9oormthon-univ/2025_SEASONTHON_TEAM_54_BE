@@ -40,7 +40,7 @@ jobs:
     steps:
       - name: Deploy to Azure VM
         # SSH를 통해 원격으로 명령어를 실행하는 액션
-        uses: appleboy/ssh-action@v1.0.3
+        uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.VM_HOST }}
           username: ${{ secrets.VM_USERNAME }}
