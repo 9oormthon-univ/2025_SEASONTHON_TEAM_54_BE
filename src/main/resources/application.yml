@@ -18,6 +18,14 @@ spring:
     password: ${DB_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: 6380
+      password: ${REDIS_PASSWORD}
+      ssl:
+        enabled: true
+
 # Swagger(OpenAPI) 공통 설정
 springdoc:
   swagger-ui:
