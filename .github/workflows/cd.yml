@@ -56,11 +56,13 @@ jobs:
             docker stop ssg-tab-container || true
             docker rm ssg-tab-container || true
             
-            # 새로운 컨테이너를 실행 (DB 접속 정보를 환경변수로 주입)
+            # 새로운 컨테이너를 실행 (DB, Redis 접속 정보를 환경변수로 주입)
             # VM의 80번 포트를 컨테이너의 8080 포트와 연결
             docker run -d --name ssg-tab-container -p 80:8080 \
               -e DB_HOST=${{ secrets.DB_HOST }} \
               -e DB_NAME=${{ secrets.DB_NAME }} \
               -e DB_USER=${{ secrets.DB_USER }} \
               -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
+              -e REDIS_HOST=${{ secrets.REDIS_HOST }} \
+              -e REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }} \
               ${{ secrets.ACR_LOGIN_SERVER }}/ssg-tab:${{ github.sha }}
