@@ -17,9 +17,14 @@ services:
       - DB_NAME=ssg
       - DB_USER=root
       - DB_PASSWORD=ssg
+      # Redis 연결 정보
+      - spring.data.redis.host=redis
+      - spring.data.redis.port=6380 # Changed from 6379 to 6380
+      - spring.data.redis.password=
     # db 서비스가 먼저 실행된 후에 app 서비스를 시작하도록 설정합니다.
     depends_on:
       - db
+      - redis
 
   # MySQL Database Service
   db:
@@ -37,6 +42,16 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
 
+  # Redis Service
+  redis:
+    image: redis:latest
+    ports:
+      - "6380:6379" # Changed from 6379:6379 to 6380:6379 (host:container)
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-data:/data
+
 # 데이터 영속성을 위해 사용할 볼륨을 정의합니다.
 volumes:
   mysql-data:
+  redis-data:
