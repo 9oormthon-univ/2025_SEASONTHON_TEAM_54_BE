@@ -49,7 +49,7 @@ jobs:
         # CI 단계에서는 테스트를 포함하여 빌드를 실행
         run: ./gradlew build
         env:
-          DB_HOST: mysql
+          DB_HOST: 127.0.0.1:3306
           DB_NAME: ssg
           DB_USER: root
           DB_PASSWORD: ssg
