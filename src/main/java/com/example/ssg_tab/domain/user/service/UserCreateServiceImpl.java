@@ -26,7 +26,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
+public class UserCreateServiceImpl implements UserCreateService {
 
     private final UserRepository userRepository;
     private final CategoryRepository categoryRepository;
@@ -114,14 +114,5 @@ public class UserServiceImpl implements UserService {
                 );
             }
         }
-    }
-
-    @Override
-    public UserResponse.UserInfoResponse getUserInfo(Long userId) {
-
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new GeneralException(ErrorStatus.MEMBER_NOT_FOUND));
-
-        return UserConverter.toUserInfoResponse(user);
     }
 }
