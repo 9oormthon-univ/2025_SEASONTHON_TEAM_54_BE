@@ -32,8 +32,8 @@ services:
       - "3307:3306"
     # MySQL 컨테이너 생성 시 초기 설정을 위한 환경 변수입니다.
     environment:
-      - MYSQL_DATABASE=${MYSQL_DATABASE}
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
     # DB 데이터를 영구적으로 저장하기 위해 볼륨을 설정합니다.
     volumes:
       - mysql-data:/var/lib/mysql
@@ -42,7 +42,7 @@ services:
   redis:
     image: redis:latest
     ports:
-      - "6380:6379" # Changed from 6379:6379 to 6380:6379 (host:container)
+      - "6380:6379" # host 6380 -> container 6379 (local is NON‑TLS; 6380 here is just a host port)
     command: redis-server --appendonly yes
     volumes:
       - redis-data:/data
