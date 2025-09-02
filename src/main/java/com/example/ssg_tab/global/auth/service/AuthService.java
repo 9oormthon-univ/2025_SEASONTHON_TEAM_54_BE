@@ -17,6 +17,7 @@ import com.example.ssg_tab.domain.user.repository.UserRepository;
 import com.example.ssg_tab.global.jwt.RefreshTokenStore;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,14 +29,12 @@ public class AuthService {
 
     private final JwtTokenService jwtTokenService;
     private final RefreshTokenStore refreshStore;
+    private final PasswordEncoder passwordEncoder;
 
     private final KakaoClient kakaoClient;
 
     private final UserRepository userRepository;
     private final UserService userService;
-
-    private final CategoryRepository categoryRepository;
-    private final UserCategoryRepository userCategoryRepository;
 
     @Value("${jwt.refresh-token-exp-days}") private long refreshExpDays;
 
@@ -70,6 +69,28 @@ public class AuthService {
         userService.attachCategories(user, request.getCategoryIds());
 
         return AuthConverter.toSignUpResponse(user);
+    }
+
+    @Transactional
+    public AuthResponse.LoginResponse emailLogin(AuthRequest.EmailLoginRequest request) {
+
+        String email = request.getEmail();
+
+        // 1. 사용자 조회
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new GeneralException(ErrorStatus.MEMBER_NOT_FOUND));
+
+        // 2. 비밀번호 검사
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            throw new GeneralException(ErrorStatus.INVALID_CREDENTIALS);
+        }
+
+        // 3. 토큰 발급
+        String accessToken = jwtTokenService.createAccessToken(user.getId());
+        String refreshToken = jwtTokenService.createRefreshToken(user.getId());
+        refreshStore.save(user.getId(), refreshToken, refreshExpDays);
+
+        return AuthConverter.toLoginResponse(accessToken, refreshToken);
     }
 
     @Transactional

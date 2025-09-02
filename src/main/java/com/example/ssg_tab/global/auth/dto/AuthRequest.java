@@ -92,4 +92,21 @@ public class AuthRequest {
         @Size(min = 3, max = 5)
         private List<Long> categoryIds;
     }
+
+    @Builder
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Schema(title = "이메일 로그인 요청")
+    public static class EmailLoginRequest {
+
+        @Schema(description = "이메일")
+        @NotBlank
+        private String email;
+
+        @Schema(description = "비밀번호")
+        @NotBlank
+        private String password;
+
+    }
 }
