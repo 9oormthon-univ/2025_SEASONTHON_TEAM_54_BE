@@ -2,15 +2,13 @@ package com.example.ssg_tab.domain.user.service;
 
 import com.example.ssg_tab.domain.category.entity.Category;
 import com.example.ssg_tab.domain.category.repository.CategoryRepository;
-import com.example.ssg_tab.domain.user.converter.UserConverter;
-import com.example.ssg_tab.domain.user.dto.response.UserResponse;
 import com.example.ssg_tab.domain.user.entity.User;
 import com.example.ssg_tab.domain.user.entity.enums.UserRole;
 import com.example.ssg_tab.domain.user.entity.mapping.UserCategory;
 import com.example.ssg_tab.domain.user.repository.UserCategoryRepository;
 import com.example.ssg_tab.domain.user.repository.UserRepository;
 import com.example.ssg_tab.global.apiPayload.status.ErrorStatus;
-import com.example.ssg_tab.global.auth.KakaoClient;
+import com.example.ssg_tab.global.util.KakaoClient;
 import com.example.ssg_tab.global.auth.dto.AuthRequest;
 import com.example.ssg_tab.global.auth.info.KakaoTokenInfo;
 import com.example.ssg_tab.global.auth.info.KakaoUserInfo;

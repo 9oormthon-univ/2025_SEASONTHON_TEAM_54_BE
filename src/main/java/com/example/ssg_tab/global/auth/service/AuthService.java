@@ -2,7 +2,6 @@ package com.example.ssg_tab.global.auth.service;
 
 import com.example.ssg_tab.domain.user.service.UserCreateService;
 import com.example.ssg_tab.global.apiPayload.status.ErrorStatus;
-import com.example.ssg_tab.global.auth.KakaoClient;
 import com.example.ssg_tab.global.exception.GeneralException;
 import com.example.ssg_tab.global.jwt.JwtTokenService;
 import com.example.ssg_tab.global.auth.converter.AuthConverter;
@@ -24,8 +23,6 @@ public class AuthService {
     private final JwtTokenService jwtTokenService;
     private final RefreshTokenStore refreshStore;
     private final PasswordEncoder passwordEncoder;
-
-    private final KakaoClient kakaoClient;
 
     private final UserRepository userRepository;
     private final UserCreateService userCreateService;
