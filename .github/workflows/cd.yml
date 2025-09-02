@@ -65,4 +65,5 @@ jobs:
               -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
               -e REDIS_HOST=${{ secrets.REDIS_HOST }} \
               -e REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }} \
+              -e JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }} \
               ${{ secrets.ACR_LOGIN_SERVER }}/ssg-tab:${{ github.sha }}

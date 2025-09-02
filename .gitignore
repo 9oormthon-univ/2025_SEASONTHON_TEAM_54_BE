@@ -41,3 +41,5 @@ application-*.yml
 
 ### pem ###
 ssg-tab-vm_key.pem
+
+.env

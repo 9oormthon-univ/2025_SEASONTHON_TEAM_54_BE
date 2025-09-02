@@ -1,4 +1,3 @@
-version: '3.8'
 
 # 개발 환경에서 사용할 서비스들을 정의합니다.
 services:
@@ -11,16 +10,14 @@ services:
       - "8080:8080"
     # 컨테이너 내부에서 사용할 환경 변수를 설정합니다.
     environment:
-      # app 서비스가 db 서비스에 연결할 때 사용할 정보입니다.
-      # DB_HOST는 서비스 이름인 'db'로 지정합니다.
-      - DB_HOST=db
-      - DB_NAME=ssg
-      - DB_USER=root
-      - DB_PASSWORD=ssg
-      # Redis 연결 정보
-      - spring.data.redis.host=redis
-      - spring.data.redis.port=6380 # Changed from 6379 to 6380
-      - spring.data.redis.password=
+      - DB_HOST=${DB_HOST}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - spring.data.redis.host=${SPRING_DATA_REDIS_HOST}
+      - spring.data.redis.port=${SPRING_DATA_REDIS_PORT}
+      - spring.data.redis.password=${SPRING_DATA_REDIS_PASSWORD}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
     # db 서비스가 먼저 실행된 후에 app 서비스를 시작하도록 설정합니다.
     depends_on:
       - db
@@ -36,8 +33,8 @@ services:
       - "3307:3306"
     # MySQL 컨테이너 생성 시 초기 설정을 위한 환경 변수입니다.
     environment:
-      - MYSQL_DATABASE=ssg
-      - MYSQL_ROOT_PASSWORD=ssg
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     # DB 데이터를 영구적으로 저장하기 위해 볼륨을 설정합니다.
     volumes:
       - mysql-data:/var/lib/mysql
