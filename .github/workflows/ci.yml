@@ -8,7 +8,7 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-    # 테스트용 DB 컨테이너 설정
+    # 테스트용 DB 및 Redis 컨테이너 설정
     services:
       mysql:
         image: mysql:8
@@ -19,6 +19,15 @@ jobs:
           - 3306:3306
         options: >-
           --health-cmd "mysqladmin ping -h localhost"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 3
+      redis:
+        image: redis:latest
+        ports:
+          - 6380:6379 # Changed from 6379:6379 to 6380:6379 (host:container)
+        options: >-
+          --health-cmd "redis-cli ping"
           --health-interval 10s
           --health-timeout 5s
           --health-retries 3
@@ -44,3 +53,8 @@ jobs:
           DB_NAME: ssg
           DB_USER: root
           DB_PASSWORD: ssg
+          # Redis 연결 정보
+          REDIS_HOST: redis
+          REDIS_PORT: 6380 # Changed from 6379 to 6380
+          REDIS_PASSWORD: "" # Assuming no password for CI Redis
+          JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
