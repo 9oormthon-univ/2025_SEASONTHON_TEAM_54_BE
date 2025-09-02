@@ -14,9 +14,8 @@ services:
       - DB_NAME=${DB_NAME}
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
-      - spring.data.redis.host=${SPRING_DATA_REDIS_HOST}
-      - spring.data.redis.port=${SPRING_DATA_REDIS_PORT}
-      - spring.data.redis.password=${SPRING_DATA_REDIS_PASSWORD}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
       - JWT_SECRET_KEY=${JWT_SECRET_KEY}
     # db 서비스가 먼저 실행된 후에 app 서비스를 시작하도록 설정합니다.
     depends_on:
