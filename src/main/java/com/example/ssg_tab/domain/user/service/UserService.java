@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface UserService {
 
-    User createKakaoUser(KakaoUserInfo userInfo);
+    User createKakaoUser(AuthRequest.KakaoLoginRequest userInfo);
 
     User createUser(AuthRequest.EmailSignUpRequest userInfo);
 

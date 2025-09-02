@@ -40,18 +40,14 @@ public class AuthService {
 
     @Transactional
     public AuthResponse.LoginResponse kakaoLogin(AuthRequest.KakaoLoginRequest request) {
-        // 1. 카카오 토큰 유효성 확인
-        KakaoTokenInfo tokenInfo = kakaoClient.getTokenInfo(request.getKakaoAccessToken());
-        Long kakaoId = tokenInfo.id(); // 소셜 식별자
 
-        // 2. 사용자 정보 조회(닉네임/이메일)
-        KakaoUserInfo userInfo = kakaoClient.getUserInfo(request.getKakaoAccessToken());
+        // 1. 회원 조회 후 없으면 생성
+        User user = userService.createKakaoUser(request);
 
-        // 3. 회원 조회 후 없으면 생성
-        User user = userRepository.findBySocialId(kakaoId)
-                .orElseGet(() -> userService.createKakaoUser(userInfo));
+        // 2. 관심 카테고리 매핑
+        userService.attachCategories(user, request.getCategoryIds());
 
-        // 4. Jwt 발급
+        // 3. Jwt 발급
         String accessToken = jwtTokenService.createAccessToken(user.getId());
         String refreshToken = jwtTokenService.createRefreshToken(user.getId());
         refreshStore.save(user.getId(), refreshToken, refreshExpDays);
@@ -65,7 +61,7 @@ public class AuthService {
         // 1. 유저 생성
         User user = userService.createUser(request);
 
-        // 2. 카테고리 매핑
+        // 2. 관심 카테고리 매핑
         userService.attachCategories(user, request.getCategoryIds());
 
         return AuthConverter.toSignUpResponse(user);
