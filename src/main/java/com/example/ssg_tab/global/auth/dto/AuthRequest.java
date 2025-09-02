@@ -87,6 +87,9 @@ public class AuthRequest {
         @NotBlank
         private String job;
 
+        @Schema(description = "프로필 이미지 url")
+        private String profileImageUrl;
+
         @Schema(description = "관심분야 카테고리 id값 리스트(3~5개 선택)")
         @NotNull
         @Size(min = 3, max = 5)

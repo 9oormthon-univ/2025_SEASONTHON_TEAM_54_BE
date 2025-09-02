@@ -77,7 +77,7 @@ public class UserCreateServiceImpl implements UserCreateService {
                 .password(null) // 아래 encode 해서 세팅
                 .nickname(userInfo.getNickname())
                 .socialId(null) // 이메일 회원가입 경로
-                .profileImageUrl(null)  // 프로필 이미지 등록 방법 필요
+                .profileImageUrl(userInfo.getProfileImageUrl())  // Todo: 프로필 이미지 등록 방법 필요(S3)
                 .ageBand(userInfo.getAgeBand())
                 .region(userInfo.getRegion())
                 .job(userInfo.getJob())
