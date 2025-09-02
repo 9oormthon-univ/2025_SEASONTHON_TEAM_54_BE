@@ -3,7 +3,7 @@ name: CI (Build and Test)
 # main 브랜치로 향하는 Pull Request가 생성/업데이트될 때 실행
 on:
   pull_request:
-    branches: [ main ]
+    branches: [ develop ]
 
 jobs:
   build-and-test:

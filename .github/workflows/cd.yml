@@ -3,7 +3,7 @@ name: CD (Build, Push to ACR, and Deploy to VM)
 # main 브랜치에 push가 발생했을 때 실행
 on:
   push:
-    branches: [ main ]
+    branches: [ develop ]
 
 jobs:
   # 1. Docker 이미지를 빌드하고 ACR에 Push하는 잡
