@@ -54,6 +54,7 @@ jobs:
           DB_USER: root
           DB_PASSWORD: ssg
           # Redis 연결 정보
-          spring.data.redis.host: redis
-          spring.data.redis.port: 6380 # Changed from 6379 to 6380
-          spring.data.redis.password: "" # Assuming no password for CI Redis
+          REDIS_HOST: redis
+          REDIS_PORT: 6380 # Changed from 6379 to 6380
+          REDIS_PASSWORD: "" # Assuming no password for CI Redis
+          JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
