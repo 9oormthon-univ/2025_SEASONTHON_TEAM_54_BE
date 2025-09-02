@@ -1,9 +1,10 @@
 name: CD (Build, Push to ACR, and Deploy to VM)
 
-# main 브랜치에 push가 발생했을 때 실행
+# develop 브랜치에 push가 발생했을 때 실행
 on:
   push:
     branches: [ develop ]
+
 
 jobs:
   # 1. Docker 이미지를 빌드하고 ACR에 Push하는 잡
@@ -67,3 +68,4 @@ jobs:
               -e REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }} \
               -e JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }} \
               ${{ secrets.ACR_LOGIN_SERVER }}/ssg-tab:${{ github.sha }}
+            
