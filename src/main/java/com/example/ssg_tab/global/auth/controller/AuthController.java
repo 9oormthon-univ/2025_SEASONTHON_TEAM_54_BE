@@ -28,6 +28,14 @@ public class AuthController {
         return ApiResponse.of(SuccessStatus._OK, response);
     }
 
+    @PostMapping(value = "/signup", produces = "application/json")
+    public ApiResponse<AuthResponse.SignUpResponse> signup(@RequestBody @Valid AuthRequest.EmailSignUpRequest request){
+
+        AuthResponse.SignUpResponse response = authService.signUp(request);
+
+        return ApiResponse.of(SuccessStatus._OK, response);
+    }
+
     @PostMapping("/reissue")
     @Operation(summary = "토큰 재발급 API", description = "리프레쉬 토큰을 이용해 토큰을 재발급")
     public ApiResponse<AuthResponse.LoginResponse> reissue(@RequestBody @Valid AuthRequest.RefreshTokenRequest request) {

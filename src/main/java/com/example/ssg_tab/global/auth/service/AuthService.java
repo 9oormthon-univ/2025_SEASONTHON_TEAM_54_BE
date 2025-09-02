@@ -1,5 +1,7 @@
 package com.example.ssg_tab.global.auth.service;
 
+import com.example.ssg_tab.domain.category.repository.CategoryRepository;
+import com.example.ssg_tab.domain.user.repository.UserCategoryRepository;
 import com.example.ssg_tab.domain.user.service.UserService;
 import com.example.ssg_tab.global.apiPayload.status.ErrorStatus;
 import com.example.ssg_tab.global.auth.KakaoClient;
@@ -18,6 +20,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -30,6 +34,9 @@ public class AuthService {
     private final UserRepository userRepository;
     private final UserService userService;
 
+    private final CategoryRepository categoryRepository;
+    private final UserCategoryRepository userCategoryRepository;
+
     @Value("${jwt.refresh-token-exp-days}") private long refreshExpDays;
 
     @Transactional
@@ -40,13 +47,10 @@ public class AuthService {
 
         // 2. 사용자 정보 조회(닉네임/이메일)
         KakaoUserInfo userInfo = kakaoClient.getUserInfo(request.getKakaoAccessToken());
-        String nickname = userInfo.getNickname();
-        String email = userInfo.getEmail(); // 동의 안했으면 null
-        String profileImageUrl = userInfo.getProfileImageUrl();
 
         // 3. 회원 조회 후 없으면 생성
         User user = userRepository.findBySocialId(kakaoId)
-                .orElseGet(() -> userService.createUser(userInfo));
+                .orElseGet(() -> userService.createKakaoUser(userInfo));
 
         // 4. Jwt 발급
         String accessToken = jwtTokenService.createAccessToken(user.getId());
@@ -54,6 +58,18 @@ public class AuthService {
         refreshStore.save(user.getId(), refreshToken, refreshExpDays);
 
         return AuthConverter.toLoginResponse(accessToken, refreshToken);
+    }
+
+    @Transactional
+    public AuthResponse.SignUpResponse signUp(AuthRequest.EmailSignUpRequest request) {
+
+        // 1. 유저 생성
+        User user = userService.createUser(request);
+
+        // 2. 카테고리 매핑
+        userService.attachCategories(user, request.getCategoryIds());
+
+        return AuthConverter.toSignUpResponse(user);
     }
 
     @Transactional
