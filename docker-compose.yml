@@ -1,0 +1,53 @@
+
+# 개발 환경에서 사용할 서비스들을 정의합니다.
+services:
+  # Spring Boot Application Service
+  app:
+    # 현재 디렉터리의 Dockerfile을 사용하여 이미지를 빌드합니다.
+    build: .
+    # 호스트의 8080 포트를 컨테이너의 8080 포트와 연결합니다.
+    ports:
+      - "8080:8080"
+    # 컨테이너 내부에서 사용할 환경 변수를 설정합니다.
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+    # db 서비스가 먼저 실행된 후에 app 서비스를 시작하도록 설정합니다.
+    depends_on:
+      - db
+      - redis
+
+  # MySQL Database Service
+  db:
+    # MySQL 8.0 공식 이미지를 사용합니다.
+    image: mysql:8.0
+    # 로컬 PC에서 MySQL Workbench 같은 툴로 접속할 수 있도록 포트를 개방합니다.
+    ports:
+      # 로컬 mysql 포트와 겹쳐서 포트 변경했습니다.
+      - "3307:3306"
+    # MySQL 컨테이너 생성 시 초기 설정을 위한 환경 변수입니다.
+    environment:
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+    # DB 데이터를 영구적으로 저장하기 위해 볼륨을 설정합니다.
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  # Redis Service
+  redis:
+    image: redis:latest
+    ports:
+      - "6380:6379" # host 6380 -> container 6379 (local is NON‑TLS; 6380 here is just a host port)
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-data:/data
+
+# 데이터 영속성을 위해 사용할 볼륨을 정의합니다.
+volumes:
+  mysql-data:
+  redis-data:
