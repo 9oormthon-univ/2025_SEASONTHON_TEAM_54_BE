@@ -24,6 +24,12 @@ repositories {
 	mavenCentral()
 }
 
+dependencyManagement {
+	imports {
+		mavenBom "com.azure.spring:spring-cloud-azure-dependencies:5.23.0"
+	}
+}
+
 dependencies {
 
 	// 기본 세팅
@@ -59,6 +65,9 @@ dependencies {
 
 	// Redis
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+	// Azure Blob Storage
+	implementation 'com.azure.spring:spring-cloud-azure-starter-storage-blob'
 
 }
 
