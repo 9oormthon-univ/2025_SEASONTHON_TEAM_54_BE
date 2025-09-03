@@ -67,5 +67,34 @@ jobs:
               -e REDIS_HOST=${{ secrets.REDIS_HOST }} \
               -e REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }} \
               -e JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }} \
+              -e AZURE_STORAGE_ACCOUNT_NAME=${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }} \
+              -e AZURE_STORAGE_ACCOUNT_KEY=${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }} \
+              -e AZURE_STORAGE_ENDPOINT=${{ secrets.AZURE_STORAGE_ENDPOINT }} \
               ${{ secrets.ACR_LOGIN_SERVER }}/ssg-tab:${{ github.sha }}
+
+  send_discord_message:
+    needs: deploy-to-vm
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Discord message
+        uses: Ilshidur/action-discord@master
+        with:
+          args: "배포 결과 알림"
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          DISCORD_USERNAME: "배포봇 🤖"
+          DISCORD_EMBEDS: >
+            [
+              {
+                "title": "🚀 배포 결과",
+                "color": ${{ needs.deploy-to-vm.result == 'success' && 3066993 || 15158332 }},
+                "fields": [
+                  {
+                    "name": "상태",
+                    "value": "${{ needs.deploy-to-vm.result == 'success' && '✅ 성공' || '❌ 실패' }}"
+                  }
+                ]
+              }
+            ]
             

@@ -13,7 +13,7 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
 
   datasource:
-    url: jdbc:mysql://${DB_HOST}/${DB_NAME}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul
+    url: jdbc:mysql://${DB_HOST}/${DB_NAME}?useSSL=true&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul
     username: ${DB_USER}
     password: ${DB_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -25,6 +25,16 @@ spring:
       password: ${REDIS_PASSWORD}
       ssl:
         enabled: true
+
+  # Azure Blob Storage
+  cloud:
+    azure:
+      storage:
+        blob:
+          account-name: ${AZURE_STORAGE_ACCOUNT_NAME}
+          account-key: ${AZURE_STORAGE_ACCOUNT_KEY}
+          endpoint: ${AZURE_STORAGE_ENDPOINT}
+
 
 # Swagger(OpenAPI) 공통 설정
 springdoc:
@@ -44,3 +54,5 @@ logging:
   level:
     org.hibernate.SQL: debug
     org.hibernate.type.descriptor.sql: trace
+
+
