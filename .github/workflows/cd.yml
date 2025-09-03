@@ -1,0 +1,100 @@
+name: CD (Build, Push to ACR, and Deploy to VM)
+
+# develop 브랜치에 push가 발생했을 때 실행
+on:
+  push:
+    branches: [ develop ]
+
+
+jobs:
+  # 1. Docker 이미지를 빌드하고 ACR에 Push하는 잡
+  build-and-push-to-acr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Azure Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ secrets.ACR_LOGIN_SERVER }}
+          username: ${{ secrets.ACR_USERNAME }}
+          password: ${{ secrets.ACR_PASSWORD }}
+
+      - name: Build and push Docker image
+        # github.sha는 커밋 ID로, 이미지에 고유한 태그를 부여합니다.
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ secrets.ACR_LOGIN_SERVER }}/ssg-tab:${{ github.sha }}
+
+  # 2. 빌드된 이미지를 VM에 배포하는 잡
+  deploy-to-vm:
+    runs-on: ubuntu-latest
+    # build-and-push-to-acr 잡이 성공해야만 실행
+    needs: build-and-push-to-acr
+
+    steps:
+      - name: Deploy to Azure VM
+        # SSH를 통해 원격으로 명령어를 실행하는 액션
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VM_HOST }}
+          username: ${{ secrets.VM_USERNAME }}
+          key: ${{ secrets.VM_SSH_PRIVATE_KEY }}
+          script: |
+            # VM에서 ACR에 로그인
+            docker login ${{ secrets.ACR_LOGIN_SERVER }} -u ${{ secrets.ACR_USERNAME }} -p ${{ secrets.ACR_PASSWORD }}
+            
+            # 방금 빌드한 새로운 이미지를 Pull
+            docker pull ${{ secrets.ACR_LOGIN_SERVER }}/ssg-tab:${{ github.sha }}
+            
+            # 기존에 실행되던 컨테이너가 있다면 중지하고 삭제 (없어도 오류나지 않음)
+            docker stop ssg-tab-container || true
+            docker rm ssg-tab-container || true
+            
+            # 새로운 컨테이너를 실행 (DB, Redis 접속 정보를 환경변수로 주입)
+            # VM의 80번 포트를 컨테이너의 8080 포트와 연결
+            docker run -d --name ssg-tab-container -p 80:8080 \
+              -e DB_HOST=${{ secrets.DB_HOST }} \
+              -e DB_NAME=${{ secrets.DB_NAME }} \
+              -e DB_USER=${{ secrets.DB_USER }} \
+              -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
+              -e REDIS_HOST=${{ secrets.REDIS_HOST }} \
+              -e REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }} \
+              -e JWT_SECRET_KEY=${{ secrets.JWT_SECRET_KEY }} \
+              -e AZURE_STORAGE_ACCOUNT_NAME=${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }} \
+              -e AZURE_STORAGE_ACCOUNT_KEY=${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }} \
+              -e AZURE_STORAGE_ENDPOINT=${{ secrets.AZURE_STORAGE_ENDPOINT }} \
+              ${{ secrets.ACR_LOGIN_SERVER }}/ssg-tab:${{ github.sha }}
+
+  send_discord_message:
+    needs: deploy-to-vm
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Discord message
+        uses: Ilshidur/action-discord@master
+        with:
+          args: "배포 결과 알림"
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          DISCORD_USERNAME: "배포봇 🤖"
+          DISCORD_EMBEDS: >
+            [
+              {
+                "title": "🚀 배포 결과",
+                "color": ${{ needs.deploy-to-vm.result == 'success' && 3066993 || 15158332 }},
+                "fields": [
+                  {
+                    "name": "상태",
+                    "value": "${{ needs.deploy-to-vm.result == 'success' && '✅ 성공' || '❌ 실패' }}"
+                  }
+                ]
+              }
+            ]
+            
