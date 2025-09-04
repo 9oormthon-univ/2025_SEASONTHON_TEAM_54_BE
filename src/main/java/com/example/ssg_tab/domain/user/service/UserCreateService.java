@@ -12,5 +12,4 @@ public interface UserCreateService {
 
     User createUser(AuthRequest.EmailSignUpRequest userInfo);
 
-    void attachCategories(User user, List<Long> categories);
 }

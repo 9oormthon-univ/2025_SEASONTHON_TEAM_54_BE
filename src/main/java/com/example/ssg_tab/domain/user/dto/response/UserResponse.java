@@ -30,4 +30,5 @@ public class UserResponse {
         private String profileImageUrl;
 
     }
+
 }
