@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class ContentsIngestServiceImpl implements ContentsIngestService {
+public class ContentsCreateServiceImpl implements ContentsCreateService {
 
     private final List<SourceClient> clients;         // NaverNewsClient, YouthCenterClient 자동 주입
     private final ContentsRepository contentsRepository;
