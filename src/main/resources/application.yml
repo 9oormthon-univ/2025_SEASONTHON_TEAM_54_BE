@@ -56,3 +56,7 @@ logging:
     org.hibernate.type.descriptor.sql: trace
 
 
+naver:
+  base-url: https://openapi.naver.com
+  client-id: ${NAVER_CLIENT_ID}
+  client-secret: ${NAVER_CLIENT_SECRET}

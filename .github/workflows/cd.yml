@@ -70,6 +70,8 @@ jobs:
               -e AZURE_STORAGE_ACCOUNT_NAME=${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }} \
               -e AZURE_STORAGE_ACCOUNT_KEY=${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }} \
               -e AZURE_STORAGE_ENDPOINT=${{ secrets.AZURE_STORAGE_ENDPOINT }} \
+              -e NAVER_CLIENT_ID=${{ secrets.NAVER_CLIENT_ID }} \
+              -e NAVER_CLIENT_SECRET=${{ secrets.NAVER_CLIENT_SECRET }} \
               ${{ secrets.ACR_LOGIN_SERVER }}/ssg-tab:${{ github.sha }}
 
   send_discord_message:

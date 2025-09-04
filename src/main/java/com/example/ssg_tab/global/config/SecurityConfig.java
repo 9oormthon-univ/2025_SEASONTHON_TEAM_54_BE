@@ -29,7 +29,8 @@ public class SecurityConfig {
                                 "/swagger-ui/**",       // UI 리소스
                                 "/api-docs/**",         // 커스텀한 api-docs 경로
                                 "/v3/api-docs/**",      // 혹시 모를 기본 경로도 함께 허용
-                                "/auth/**"              // 인증 경로
+                                "/auth/**",             // 인증 경로
+                                "/dev/**"               // 개발용 API
                         ).permitAll()
 
                         // 테스트용

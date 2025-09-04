@@ -56,6 +56,9 @@ public class User extends BaseEntity {
     @Column(name = "password")
     private String password;
 
+    /**
+     * 편의 메소드
+     **/
     public void encodePassword(String password) {
         this.password = password;
     }
