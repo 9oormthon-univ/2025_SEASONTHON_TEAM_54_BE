@@ -28,8 +28,6 @@ import java.util.Optional;
 public class UserCreateServiceImpl implements UserCreateService {
 
     private final UserRepository userRepository;
-    private final CategoryRepository categoryRepository;
-    private final UserCategoryRepository userCategoryRepository;
     private final PasswordEncoder passwordEncoder;
     private final KakaoClient kakaoClient;
 
@@ -52,9 +50,6 @@ public class UserCreateServiceImpl implements UserCreateService {
                         .nickname(kakaoUserInfo.getNickname())
                         .socialId(kakaoUserInfo.id())
                         .profileImageUrl(kakaoUserInfo.getProfileImageUrl())
-//                        .ageBand(userInfo.getAgeBand())
-//                        .region(userInfo.getRegion())
-//                        .job(userInfo.getJob())
                         .step(UserStep.ONBOARDING)
                         .role(UserRole.USER)
                         .build());
@@ -80,11 +75,6 @@ public class UserCreateServiceImpl implements UserCreateService {
                         .email(userInfo.getEmail())
                         .password(null) // 아래 encode 해서 세팅
                         .socialId(null) // 이메일 회원가입 경로
-//                        .nickname(userInfo.getNickname())
-//                        .profileImageUrl(userInfo.getProfileImageUrl())
-//                        .ageBand(userInfo.getAgeBand())
-//                        .region(userInfo.getRegion())
-//                        .job(userInfo.getJob())
                         .step(UserStep.ONBOARDING)
                         .role(UserRole.USER)
                         .build());
