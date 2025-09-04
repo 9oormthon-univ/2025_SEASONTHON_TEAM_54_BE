@@ -69,6 +69,11 @@ dependencies {
 	// Azure Blob Storage
 	implementation 'com.azure.spring:spring-cloud-azure-starter-storage-blob'
 
+	// 외부 API 파싱용
+	implementation("com.fasterxml.jackson.core:jackson-databind")
+	implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml") // xml 파싱
+	implementation("org.jsoup:jsoup:1.17.2")
+
 }
 
 tasks.named('test') {
