@@ -1,5 +1,6 @@
 package com.example.ssg_tab.domain.user.entity;
 
+import com.example.ssg_tab.domain.user.entity.enums.AgeBand;
 import com.example.ssg_tab.domain.user.entity.enums.UserRole;
 import com.example.ssg_tab.global.entity.BaseEntity;
 import jakarta.persistence.*;
@@ -23,16 +24,34 @@ public class User extends BaseEntity {
     @Column(unique = true)
     private Long socialId;
 
-    // user 기본 정보
     @Column(name = "nickname", length = 100)
-    private String nickname;
+    private String nickname;    // 닉네임(카카오 로그인 시 기본)
+
     @Column(name = "email", unique = true, length = 255)
-    private String email;
+    private String email;       // 이메일(카카오 로그인 시 기본)
+
     @Column(name = "profile_image_url")
-    private String profileImageUrl;
+    private String profileImageUrl; // 프로필 이미지(카카오 로그인 시 기본)
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    private AgeBand ageBand;    // 연령대(20대 초, 중, 후, 30대)
+
+    @Column(nullable = false, length = 255)
+    private String region;  //  거주지역
+
+    @Column(nullable = false, length = 100)
+    private String job;     // 직업군
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
     private UserRole role;
+
+    @Column(name = "password")
+    private String password;
+
+    public void encodePassword(String password) {
+        this.password = password;
+    }
 
 }

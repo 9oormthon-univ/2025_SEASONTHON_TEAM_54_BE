@@ -3,39 +3,21 @@ package com.example.ssg_tab.domain.user.service;
 import com.example.ssg_tab.domain.user.converter.UserConverter;
 import com.example.ssg_tab.domain.user.dto.response.UserResponse;
 import com.example.ssg_tab.domain.user.entity.User;
-import com.example.ssg_tab.domain.user.entity.enums.UserRole;
 import com.example.ssg_tab.domain.user.repository.UserRepository;
 import com.example.ssg_tab.global.apiPayload.status.ErrorStatus;
-import com.example.ssg_tab.global.auth.info.KakaoUserInfo;
 import com.example.ssg_tab.global.exception.GeneralException;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
+public class UserQueryServiceImpl implements UserQueryService {
 
     private final UserRepository userRepository;
 
     @Override
-    @Transactional
-    public User createUser(KakaoUserInfo userInfo) {
-
-        User created = User.builder()
-                .socialId(userInfo.id())
-                .nickname(userInfo.getNickname())
-                .email(userInfo.getEmail())
-                .role(UserRole.USER)
-                .profileImageUrl(userInfo.getProfileImageUrl())
-                .build();
-        return userRepository.save(created);
-
-    }
-
-    @Override
+    @Transactional(readOnly = true)
     public UserResponse.UserInfoResponse getUserInfo(Long userId) {
 
         User user = userRepository.findById(userId)
@@ -43,4 +25,5 @@ public class UserServiceImpl implements UserService {
 
         return UserConverter.toUserInfoResponse(user);
     }
+
 }

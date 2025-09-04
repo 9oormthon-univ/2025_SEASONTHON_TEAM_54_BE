@@ -31,7 +31,14 @@ public enum ErrorStatus implements BaseErrorCode {
     INVALID_TOKEN(HttpStatus.UNAUTHORIZED, "AUTH4001", "토큰이 유효하지 않습니다."),
 
     // 멤버 관련 에러
-    MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "MEMBER4001", "사용자가 없습니다.");
+    MEMBER_NOT_FOUND(HttpStatus.NOT_FOUND, "MEMBER4001", "사용자가 없습니다."),
+    EMAIL_ALREADY_EXISTS(HttpStatus.CONFLICT, "MEMBER4002","이미 가입된 이메일입니다."),
+    INVALID_CREDENTIALS(HttpStatus.BAD_REQUEST, "MEMBER4003", "비밀번호가 올바르지 않습니다."),
+
+    // 카테고리 관련 에러
+    CATEGORY_NOT_FOUND(HttpStatus.NOT_FOUND, "CATEGORY4001","존재하지 않는 카테고리입니다."),
+    INVALID_INTEREST_COUNT(HttpStatus.BAD_REQUEST, "CATEGORY4002", "카테고리는 3~5개 선택해야합니다.");
+
 
     private final HttpStatus httpStatus;
     private final String code;

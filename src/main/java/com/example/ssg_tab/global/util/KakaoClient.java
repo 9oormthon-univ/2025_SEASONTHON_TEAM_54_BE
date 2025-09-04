@@ -1,4 +1,4 @@
-package com.example.ssg_tab.global.auth;
+package com.example.ssg_tab.global.util;
 
 import com.example.ssg_tab.global.auth.info.KakaoTokenInfo;
 import com.example.ssg_tab.global.auth.info.KakaoUserInfo;

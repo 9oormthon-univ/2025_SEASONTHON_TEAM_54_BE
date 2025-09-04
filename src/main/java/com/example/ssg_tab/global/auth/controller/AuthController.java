@@ -21,11 +21,30 @@ public class AuthController {
 
     @PostMapping(value = "/login/kakao", produces = "application/json")
     @Operation(summary = "카카오 로그인 API", description = "카카오를 통해 소셜 로그인/회원가입 후 토큰 발급")
-    public ApiResponse<AuthResponse.LoginResponse> login(@RequestBody @Valid AuthRequest.KakaoLoginRequest request){
+    public ApiResponse<AuthResponse.LoginResponse> kakaoLogin(@RequestBody @Valid AuthRequest.KakaoLoginRequest request){
 
         AuthResponse.LoginResponse response = authService.kakaoLogin(request);
 
         return ApiResponse.of(SuccessStatus._OK, response);
+    }
+
+    @PostMapping(value = "/signup", produces = "application/json")
+    @Operation(summary = "이메일 회원가입 API", description = "이메일과 온보딩 정보 입력 후 회원가입")
+    public ApiResponse<AuthResponse.SignUpResponse> signup(@RequestBody @Valid AuthRequest.EmailSignUpRequest request){
+
+        AuthResponse.SignUpResponse response = authService.signUp(request);
+
+        return ApiResponse.of(SuccessStatus._OK, response);
+    }
+
+    @PostMapping(value ="/login/email", produces = "application/json")
+    @Operation(summary = "이메일 로그인 API", description = "이메일 회원가입 시 입력한 이메일과 비밀번호를 통해 로그인 후 토큰 발급")
+    public ApiResponse<AuthResponse.LoginResponse> emailLogin(@RequestBody @Valid AuthRequest.EmailLoginRequest request){
+
+        AuthResponse.LoginResponse response = authService.emailLogin(request);
+
+        return ApiResponse.of(SuccessStatus._OK, response);
+
     }
 
     @PostMapping("/reissue")

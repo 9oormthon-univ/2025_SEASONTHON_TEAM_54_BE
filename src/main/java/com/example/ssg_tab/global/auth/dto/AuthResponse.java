@@ -23,4 +23,16 @@ public class AuthResponse {
 
     }
 
+    @Builder
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Schema(title = "회원가입 응답")
+    public static class SignUpResponse {
+
+        @Schema(description = "생성된 사용자의 id값")
+        private Long userId;
+
+    }
+
 }
