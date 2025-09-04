@@ -25,23 +25,6 @@ public class AuthRequest {
         @NotBlank(message = "카카오 액세스 토큰을 필수로 입력해주세요.")
         private String kakaoAccessToken;
 
-        @Schema(description = "연령대 ENUM")
-        @NotNull
-        private AgeBand ageBand;
-
-        @Schema(description = "거주지역")
-        @NotBlank
-        private String region;
-
-        @Schema(description = "직업군")
-        @NotBlank
-        private String job;
-
-        @Schema(description = "관심분야 카테고리 id값 리스트(3~5개 선택)")
-        @NotNull
-        @Size(min = 3, max = 5)
-        private List<Long> categoryIds;
-
     }
 
     @Builder
@@ -63,10 +46,6 @@ public class AuthRequest {
     @Schema(title = "이메일로 회원가입 요청")
     public static class EmailSignUpRequest {
 
-        @Schema(description = "사용자 닉네임")
-        @NotBlank
-        private String nickname;
-
         @Schema(description = "회원가입할 이메일")
         @NotBlank
         private String email;
@@ -75,25 +54,6 @@ public class AuthRequest {
         @NotBlank
         private String password;
 
-        @Schema(description = "연령대 ENUM")
-        @NotNull
-        private AgeBand ageBand;
-
-        @Schema(description = "거주지역")
-        @NotBlank
-        private String region;
-
-        @Schema(description = "직업군")
-        @NotBlank
-        private String job;
-
-        @Schema(description = "프로필 이미지 url")
-        private String profileImageUrl;
-
-        @Schema(description = "관심분야 카테고리 id값 리스트(3~5개 선택)")
-        @NotNull
-        @Size(min = 3, max = 5)
-        private List<Long> categoryIds;
     }
 
     @Builder

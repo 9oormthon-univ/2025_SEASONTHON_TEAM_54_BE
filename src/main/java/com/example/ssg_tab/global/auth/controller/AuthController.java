@@ -28,8 +28,8 @@ public class AuthController {
         return ApiResponse.of(SuccessStatus._OK, response);
     }
 
-    @PostMapping(value = "/signup", produces = "application/json")
-    @Operation(summary = "이메일 회원가입 API", description = "이메일과 온보딩 정보 입력 후 회원가입")
+    @PostMapping(value = "/signup/email", produces = "application/json")
+    @Operation(summary = "이메일 회원가입 API", description = "이메일과 비밀번호 입력 후 회원가입")
     public ApiResponse<AuthResponse.SignUpResponse> signup(@RequestBody @Valid AuthRequest.EmailSignUpRequest request){
 
         AuthResponse.SignUpResponse response = authService.signUp(request);
@@ -49,9 +49,9 @@ public class AuthController {
 
     @PostMapping("/reissue")
     @Operation(summary = "토큰 재발급 API", description = "리프레쉬 토큰을 이용해 토큰을 재발급")
-    public ApiResponse<AuthResponse.LoginResponse> reissue(@RequestBody @Valid AuthRequest.RefreshTokenRequest request) {
+    public ApiResponse<AuthResponse.ReissueResponse> reissue(@RequestBody @Valid AuthRequest.RefreshTokenRequest request) {
 
-        AuthResponse.LoginResponse response = authService.reissue(request);
+        AuthResponse.ReissueResponse response = authService.reissue(request);
 
         return ApiResponse.of(SuccessStatus._OK, response);
     }

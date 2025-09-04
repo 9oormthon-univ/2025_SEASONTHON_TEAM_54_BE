@@ -35,15 +35,12 @@ public class AuthService {
         // 1. 회원 조회 후 없으면 생성
         User user = userCreateService.createKakaoUser(request);
 
-        // 2. 관심 카테고리 매핑
-        userCreateService.attachCategories(user, request.getCategoryIds());
-
-        // 3. Jwt 발급
+        // 2. Jwt 발급
         String accessToken = jwtTokenService.createAccessToken(user.getId());
         String refreshToken = jwtTokenService.createRefreshToken(user.getId());
         refreshStore.save(user.getId(), refreshToken, refreshExpDays);
 
-        return AuthConverter.toLoginResponse(accessToken, refreshToken);
+        return AuthConverter.toLoginResponse(user, accessToken, refreshToken);
     }
 
     @Transactional
@@ -52,10 +49,12 @@ public class AuthService {
         // 1. 유저 생성
         User user = userCreateService.createUser(request);
 
-        // 2. 관심 카테고리 매핑
-        userCreateService.attachCategories(user, request.getCategoryIds());
+        // 2. 토큰 발급
+        String accessToken = jwtTokenService.createAccessToken(user.getId());
+        String refreshToken = jwtTokenService.createRefreshToken(user.getId());
+        refreshStore.save(user.getId(), refreshToken, refreshExpDays);
 
-        return AuthConverter.toSignUpResponse(user);
+        return AuthConverter.toSignUpResponse(user, accessToken, refreshToken);
     }
 
     @Transactional
@@ -77,11 +76,11 @@ public class AuthService {
         String refreshToken = jwtTokenService.createRefreshToken(user.getId());
         refreshStore.save(user.getId(), refreshToken, refreshExpDays);
 
-        return AuthConverter.toLoginResponse(accessToken, refreshToken);
+        return AuthConverter.toLoginResponse(user, accessToken, refreshToken);
     }
 
     @Transactional
-    public AuthResponse.LoginResponse reissue(AuthRequest.RefreshTokenRequest request) {
+    public AuthResponse.ReissueResponse reissue(AuthRequest.RefreshTokenRequest request) {
 
         String refreshToken = request.getRefreshToken();
 
@@ -98,6 +97,6 @@ public class AuthService {
         String newRefresh = jwtTokenService.createRefreshToken(uid);
         refreshStore.save(uid, newRefresh, refreshExpDays);
 
-        return AuthConverter.toLoginResponse(newAccess, newRefresh);
+        return AuthConverter.toReissueResponse(newAccess, newRefresh);
     }
 }

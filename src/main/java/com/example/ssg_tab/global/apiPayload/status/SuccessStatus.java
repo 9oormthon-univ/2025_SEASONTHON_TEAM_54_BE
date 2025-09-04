@@ -11,7 +11,10 @@ import org.springframework.http.HttpStatus;
 public enum SuccessStatus implements BaseCode {
 
     // 일반적인 응답
-    _OK(HttpStatus.OK, "COMMON2000", "성공입니다.");
+    _OK(HttpStatus.OK, "COMMON2000", "성공입니다."),
+
+    // 온보딩 성공 응답
+    ONBOARDING_SUCCESS(HttpStatus.OK, "ONBOARDING2000", "온보딩 성공");
 
     private final HttpStatus httpStatus;
     private final String code;
