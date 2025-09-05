@@ -38,8 +38,11 @@ public enum ErrorStatus implements BaseErrorCode {
 
     // 카테고리 관련 에러
     CATEGORY_NOT_FOUND(HttpStatus.NOT_FOUND, "CATEGORY4001","존재하지 않는 카테고리입니다."),
-    INVALID_INTEREST_COUNT(HttpStatus.BAD_REQUEST, "CATEGORY4002", "카테고리는 3~5개 선택해야합니다.");
+    INVALID_INTEREST_COUNT(HttpStatus.BAD_REQUEST, "CATEGORY4002", "카테고리는 3~5개 선택해야합니다."),
 
+    // 퀴즈 관련 에러
+    QUIZ_NOT_FOUND(HttpStatus.NOT_FOUND, "QUIZ4001", "해당 퀴즈를 찾을 수 없습니다."),
+    QUIZ_ALREADY_COMPLETE(HttpStatus.BAD_REQUEST, "QUIZ4002", "이미 완료된 퀴즈입니다.");
 
     private final HttpStatus httpStatus;
     private final String code;
