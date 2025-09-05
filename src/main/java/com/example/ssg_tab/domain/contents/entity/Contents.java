@@ -49,4 +49,8 @@ public class Contents extends BaseEntity {
     @OneToMany(mappedBy = "contents", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private List<ContentsCategory> categories = new ArrayList<>();
+
+    public void updateImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
 }
