@@ -23,6 +23,9 @@ public class Quiz extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "question")
+    private String question;
+
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "options" ,columnDefinition = "json", nullable = false)
     @Builder.Default
