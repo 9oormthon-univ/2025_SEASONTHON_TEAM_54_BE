@@ -28,6 +28,11 @@ public class UserCategory {
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
+    // 유저의 해당 카테고리 진행률
+    @Builder.Default
+    @Column(name = "progress", nullable = false)
+    private int progress = 0;
+
     public void setUser(User user) {
         this.user = user;
     }
