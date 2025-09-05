@@ -58,6 +58,7 @@ jobs:
           REDIS_HOST: 127.0.0.1
           REDIS_PORT: 6380 # Changed from 6379 to 6380
           REDIS_PASSWORD: "" # Assuming no password for CI Redis
+          REDIS_SSL: "false"
           JWT_SECRET_KEY: ${{ secrets.JWT_SECRET_KEY }}
           AZURE_STORAGE_ACCOUNT_NAME: ${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}
           AZURE_STORAGE_ACCOUNT_KEY: ${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }}
