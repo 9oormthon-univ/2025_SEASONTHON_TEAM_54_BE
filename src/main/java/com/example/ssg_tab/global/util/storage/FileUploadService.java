@@ -15,7 +15,7 @@ public class FileUploadService {
 
     private final BlobServiceClient blobServiceClient;
 
-    @Value("${azure.storage.blob.container-name}")
+    @Value("${azure.storage.blob.account-name}")
     private String containerName;
 
     public String uploadFile(InputStream inputStream, long length, String fileName) {
