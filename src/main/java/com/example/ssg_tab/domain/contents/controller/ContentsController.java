@@ -5,6 +5,7 @@ import com.example.ssg_tab.domain.contents.repository.ContentsRepository;
 import com.example.ssg_tab.domain.contents.service.ContentsQueryService;
 import com.example.ssg_tab.global.apiPayload.ApiResponse;
 import com.example.ssg_tab.global.apiPayload.status.SuccessStatus;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,6 +25,7 @@ public class ContentsController {
     private final ContentsQueryService contentsQueryService;
 
     @GetMapping(value = "", produces = "application/json")
+    @Operation(summary = "컨텐츠 조회 API",description = "홈에서 컨텐츠를 조회합니다.")
     public ApiResponse<ContentsResponse.ContentsPageResponse> getContentsPage(
             @AuthenticationPrincipal UserDetails userDetails,
             @RequestParam(required = false) Integer page,

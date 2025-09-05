@@ -3,7 +3,6 @@ package com.example.ssg_tab.domain.user.controller;
 import com.example.ssg_tab.domain.user.dto.request.UserRequest;
 import com.example.ssg_tab.domain.user.dto.response.UserResponse;
 import com.example.ssg_tab.domain.user.service.OnboardingService;
-import com.example.ssg_tab.domain.user.service.UserCreateService;
 import com.example.ssg_tab.domain.user.service.UserQueryService;
 import com.example.ssg_tab.global.apiPayload.ApiResponse;
 import com.example.ssg_tab.global.apiPayload.status.SuccessStatus;
@@ -26,10 +25,20 @@ public class UserController {
 
     @GetMapping(value = "/", produces = "application/json")
     @Operation(summary = "유저 정보 조회 API", description = "로그인한 사용자의 유저 정보를 조회합니다.")
-    public ApiResponse<UserResponse.UserInfoResponse> getUserInfo(@AuthenticationPrincipal UserDetails userDetails){
+    public ApiResponse<UserResponse.UserInfo> getUserInfo(@AuthenticationPrincipal UserDetails userDetails){
 
         Long uid = Long.valueOf(userDetails.getUsername());   // 유저 ID
-        UserResponse.UserInfoResponse response = userQueryService.getUserInfo(uid);
+        UserResponse.UserInfo response = userQueryService.getUserInfo(uid);
+
+        return ApiResponse.of(SuccessStatus._OK, response);
+    }
+
+    @GetMapping(value = "/learning", produces = "application/json")
+    @Operation(summary = "유저의 학습 데이터 조회 API", description = "로그인한 사용자의 학습페이지 정보를 조회합니다.")
+    public ApiResponse<UserResponse.UserLearningInfo> getUserLearningInfo(@AuthenticationPrincipal UserDetails userDetails){
+
+        Long uid = Long.valueOf(userDetails.getUsername());   // 유저 ID
+        UserResponse.UserLearningInfo response = userQueryService.getUserLearningInfo(uid);
 
         return ApiResponse.of(SuccessStatus._OK, response);
     }
