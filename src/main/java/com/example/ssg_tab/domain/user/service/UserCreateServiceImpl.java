@@ -44,6 +44,7 @@ public class UserCreateServiceImpl implements UserCreateService {
                         .profileImageUrl(kakaoUserInfo.getProfileImageUrl())
                         .step(UserStep.ONBOARDING)
                         .role(UserRole.USER)
+                        .level(1)
                         .build());
 
         return userRepository.save(user);
@@ -69,6 +70,7 @@ public class UserCreateServiceImpl implements UserCreateService {
                         .socialId(null) // 이메일 회원가입 경로
                         .step(UserStep.ONBOARDING)
                         .role(UserRole.USER)
+                        .level(1)
                         .build());
 
         user.encodePassword(passwordEncoder.encode(userInfo.getPassword()));

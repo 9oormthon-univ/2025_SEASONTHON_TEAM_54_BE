@@ -53,6 +53,10 @@ public class User extends BaseEntity {
     @Column(name = "role", nullable = false)
     private UserRole role;
 
+    @Builder.Default
+    @Column(name = "level", nullable = false)
+    private int level = 1;  // 1부터 시작
+
     @Column(name = "password")
     private String password;
 
