@@ -15,7 +15,7 @@ public class FileUploadService {
 
     private final BlobServiceClient blobServiceClient;
 
-    @Value("${spring.cloud.azure.storage.blob.account-name}")
+    @Value("${spring.cloud.azure.storage.blob.account}")
     private String containerName;
 
     public String uploadFile(InputStream inputStream, long length, String fileName) {
