@@ -14,7 +14,10 @@ public enum SuccessStatus implements BaseCode {
     _OK(HttpStatus.OK, "COMMON2000", "성공입니다."),
 
     // 온보딩 성공 응답
-    ONBOARDING_SUCCESS(HttpStatus.OK, "ONBOARDING2000", "온보딩 성공");
+    ONBOARDING_SUCCESS(HttpStatus.OK, "ONBOARDING2000", "온보딩 성공"),
+
+    // 퀴즈 성공 응답
+    QUIZ_COMPLETE(HttpStatus.OK, "QUIZ2000", "퀴즈 완료");
 
     private final HttpStatus httpStatus;
     private final String code;
