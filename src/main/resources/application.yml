@@ -24,7 +24,7 @@ spring:
       port: 6380
       password: ${REDIS_PASSWORD}
       ssl:
-        enabled: true
+        enabled: ${REDIS_SSL:true}
 
   # Azure Blob Storage
   cloud:
