@@ -13,7 +13,7 @@ public class ContentsRequest {
     @NoArgsConstructor
     @AllArgsConstructor
     @Schema(description = "컨텐츠 좋아요 요청")
-    public static class Bookmark{
+    public static class BookmarkRequest {
 
         @Schema(description = "좋아요를 누를 컨텐츠의 아이디")
         private Long contentsId;

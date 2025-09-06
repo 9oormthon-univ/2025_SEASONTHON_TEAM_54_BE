@@ -69,7 +69,7 @@ public class ContentsResponse {
     @NoArgsConstructor
     @AllArgsConstructor
     @Schema(description = "좋아요한 컨텐츠 리스트")
-    public static class Bookmark {
+    public static class BookmarkResponse {
 
         @Schema(description = "좋아요 컨텐츠 리스트")
         private List<ContentsInfo> contentsList;

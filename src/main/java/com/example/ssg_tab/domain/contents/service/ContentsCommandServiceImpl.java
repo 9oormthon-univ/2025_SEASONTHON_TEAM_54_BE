@@ -23,7 +23,7 @@ public class ContentsCommandServiceImpl implements ContentsCommandService {
 
     @Override
     @Transactional
-    public void bookmark(Long userId, ContentsRequest.Bookmark request) {
+    public void bookmark(Long userId, ContentsRequest.BookmarkRequest request) {
 
         // 1. 사용자 및 컨텐츠 조회
         User user = userRepository.findById(userId).orElseThrow(() -> new GeneralException(ErrorStatus.MEMBER_NOT_FOUND));

@@ -4,9 +4,7 @@ import com.example.ssg_tab.domain.contents.converter.ContentsConverter;
 import com.example.ssg_tab.domain.contents.dto.response.ContentsResponse;
 import com.example.ssg_tab.domain.contents.entity.Contents;
 import com.example.ssg_tab.domain.contents.repository.ContentsRepository;
-import com.example.ssg_tab.domain.user.entity.mapping.UserContents;
 import com.example.ssg_tab.domain.user.repository.UserContentsRepository;
-import com.example.ssg_tab.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -39,7 +37,7 @@ public class ContentsQueryServiceImpl implements ContentsQueryService {
 
     @Override
     @Transactional(readOnly = true)
-    public ContentsResponse.Bookmark getBookmark(Long userId, Long categoryId) {
+    public ContentsResponse.BookmarkResponse getBookmark(Long userId, Long categoryId) {
 
         List<Contents> contents = userContentsRepository
                 .findBookmarkedContents(userId, categoryId);
