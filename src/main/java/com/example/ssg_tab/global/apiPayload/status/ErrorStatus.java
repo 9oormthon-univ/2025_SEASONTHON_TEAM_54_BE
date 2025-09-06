@@ -42,7 +42,10 @@ public enum ErrorStatus implements BaseErrorCode {
 
     // 퀴즈 관련 에러
     QUIZ_NOT_FOUND(HttpStatus.NOT_FOUND, "QUIZ4001", "해당 퀴즈를 찾을 수 없습니다."),
-    QUIZ_ALREADY_COMPLETE(HttpStatus.BAD_REQUEST, "QUIZ4002", "이미 완료된 퀴즈입니다.");
+    QUIZ_ALREADY_COMPLETE(HttpStatus.BAD_REQUEST, "QUIZ4002", "이미 완료된 퀴즈입니다."),
+
+    // 컨텐츠 관련 에러
+    CONTENTS_NOT_FOUND(HttpStatus.NOT_FOUND, "CONTENTS4001", "해당 컨텐츠를 찾을 수 없습니다.");
 
     private final HttpStatus httpStatus;
     private final String code;

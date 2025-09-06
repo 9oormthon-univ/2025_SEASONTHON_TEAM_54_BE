@@ -36,4 +36,17 @@ public class ContentsConverter {
                 .contentsPage(dtoPage)
                 .build();
     }
+
+    public static ContentsResponse.Bookmark toBookmark(List<Contents> contentsList) {
+        List<Contents> safe = (contentsList == null) ? Collections.emptyList() : contentsList;
+
+        List<ContentsResponse.ContentsInfo> items = safe.stream()
+                .map(ContentsConverter::toContentsInfo)
+                .toList();
+
+        return ContentsResponse.Bookmark.builder()
+                .contentsList(items)
+                .build();
+    }
+
 }
