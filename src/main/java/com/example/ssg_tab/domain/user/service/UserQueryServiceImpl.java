@@ -21,6 +21,7 @@ public class UserQueryServiceImpl implements UserQueryService {
     private final UserRepository userRepository;
     private final UserCategoryRepository userCategoryRepository;
 
+
     @Override
     @Transactional(readOnly = true)
     public UserResponse.UserInfo getUserInfo(Long userId) {
