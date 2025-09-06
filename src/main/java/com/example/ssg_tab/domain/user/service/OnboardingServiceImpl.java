@@ -34,7 +34,7 @@ public class OnboardingServiceImpl implements OnboardingService {
         User user = userRepository.findById(userId).orElseThrow(() -> new GeneralException(ErrorStatus.MEMBER_NOT_FOUND));
 
         // 2. 사용자 단계 검사
-        if(user.getStep() != UserStep.ONBOARDING) throw new GeneralException(ErrorStatus.ONBOARDING_STEP_ERROR);
+//        if(user.getStep() != UserStep.ONBOARDING) throw new GeneralException(ErrorStatus.ONBOARDING_STEP_ERROR);
 
         // 3. 온보딩 내용 업데이트
         if(user.getSocialId() == null){ // 카카오 유저가 아닐 경우
