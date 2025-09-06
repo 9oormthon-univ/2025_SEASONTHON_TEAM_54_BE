@@ -37,14 +37,14 @@ public class ContentsConverter {
                 .build();
     }
 
-    public static ContentsResponse.Bookmark toBookmark(List<Contents> contentsList) {
+    public static ContentsResponse.BookmarkResponse toBookmark(List<Contents> contentsList) {
         List<Contents> safe = (contentsList == null) ? Collections.emptyList() : contentsList;
 
         List<ContentsResponse.ContentsInfo> items = safe.stream()
                 .map(ContentsConverter::toContentsInfo)
                 .toList();
 
-        return ContentsResponse.Bookmark.builder()
+        return ContentsResponse.BookmarkResponse.builder()
                 .contentsList(items)
                 .build();
     }
