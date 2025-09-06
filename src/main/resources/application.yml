@@ -21,17 +21,17 @@ spring:
   data:
     redis:
       host: ${REDIS_HOST}
-      port: 6380
-      password: ${REDIS_PASSWORD}
+      port: 6379
+      password:
       ssl:
-        enabled: true
+        enabled: false
 
   # Azure Blob Storage
   cloud:
     azure:
       storage:
         blob:
-          account-name: ${AZURE_STORAGE_ACCOUNT_NAME}
+          account: ${AZURE_STORAGE_ACCOUNT_NAME}
           account-key: ${AZURE_STORAGE_ACCOUNT_KEY}
           endpoint: ${AZURE_STORAGE_ENDPOINT}
 
