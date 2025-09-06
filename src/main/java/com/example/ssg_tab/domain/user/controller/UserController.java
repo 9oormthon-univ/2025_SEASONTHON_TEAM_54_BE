@@ -23,7 +23,7 @@ public class UserController {
     private final UserQueryService userQueryService;
     private final OnboardingService onboardingService;
 
-    @GetMapping(value = "/", produces = "application/json")
+    @GetMapping(value = "", produces = "application/json")
     @Operation(summary = "유저 정보 조회 API", description = "로그인한 사용자의 유저 정보를 조회합니다.")
     public ApiResponse<UserResponse.UserInfo> getUserInfo(@AuthenticationPrincipal UserDetails userDetails){
 

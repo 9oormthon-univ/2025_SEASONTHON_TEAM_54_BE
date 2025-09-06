@@ -13,10 +13,10 @@ public class UserConverter {
     public static UserResponse.UserInfo toUserInfoResponse(User user) {
 
         return UserResponse.UserInfo.builder()
-                .id(user.getId())
                 .nickname(user.getNickname())
                 .email(user.getEmail())
                 .profileImageUrl(user.getProfileImageUrl())
+                .level(user.getLevel())
                 .build();
 
     }

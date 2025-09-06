@@ -17,9 +17,6 @@ public class UserResponse {
     @Schema(description = "사용자 정보 조회")
     public static class UserInfo {
 
-        @Schema(description = "유저 ID")
-        private Long id;
-
         @Schema(description = "유저 닉네임")
         private String nickname;
 
@@ -28,6 +25,9 @@ public class UserResponse {
 
         @Schema(description = "유저 프로필 이미지")
         private String profileImageUrl;
+
+        @Schema(description = "유저 레벨")
+        private int level;
 
     }
 
@@ -66,8 +66,5 @@ public class UserResponse {
         private int progress;
 
     }
-
-
-
 
 }
